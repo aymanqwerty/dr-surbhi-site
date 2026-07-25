@@ -25,6 +25,7 @@ import {
   type PublicClinic,
 } from "@/lib/patient-api";
 import { BookingCalendar, isoOf } from "@/features/booking/BookingCalendar";
+import { downloadAppointmentReceipt } from "@/features/account/lib/receipt";
 import { loadRazorpay, openRazorpayCheckout } from "@/features/booking/razorpay";
 import { MemberFormModal } from "@/features/account/MemberFormModal";
 import { Button } from "@/components/ui/Button";
@@ -80,6 +81,9 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
   const [date, setDate] = useState(prefill?.date ?? "");
   const [slotId, setSlotId] = useState(prefill?.slotId ?? "");
   const [confirmation, setConfirmation] = useState<BookingConfirmation | null>(null);
+  // Patient name isn't part of BookingConfirmation, so we remember it from the
+  // form/prefill to print it on the downloadable receipt.
+  const [patientName, setPatientName] = useState<string>("");
   const [processing, setProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
 
@@ -102,6 +106,7 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
     setDate("");
     setSlotId("");
     setConfirmation(null);
+    setPatientName("");
     setProcessing(false);
     setPaymentError(null);
     startMutation.reset();
@@ -135,7 +140,10 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
                 signature: response.razorpay_signature,
               },
             })
-            .then((conf) => setConfirmation(conf))
+            .then((conf) => {
+              setPatientName(prefill.name);
+              setConfirmation(conf);
+            })
             .catch((err) =>
               setPaymentError(
                 err instanceof ApiError
@@ -168,6 +176,7 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
       .mutateAsync({ slot_id: selectedSlot.id, ...payload })
       .then((result) => {
         if (result.status === "confirmed" && result.appointment) {
+          setPatientName(prefill.name);
           setConfirmation(result.appointment);
         } else if (result.payment && result.hold_id) {
           runPayment(result.hold_id, result.payment, prefill);
@@ -191,7 +200,13 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
   if (isError || !profile) return <p className="text-sm text-red-600">Doctor not found.</p>;
 
   if (confirmation) {
-    return <ConfirmationCard confirmation={confirmation} onBookAnother={resetAll} />;
+    return (
+      <ConfirmationCard
+        confirmation={confirmation}
+        patientName={patientName}
+        onBookAnother={resetAll}
+      />
+    );
   }
 
   if (clinics.length === 0) {
@@ -907,9 +922,11 @@ function SummaryRow({ label, value }: { label: string; value: string | null }) {
 
 function ConfirmationCard({
   confirmation,
+  patientName,
   onBookAnother,
 }: {
   confirmation: BookingConfirmation;
+  patientName: string;
   onBookAnother: () => void;
 }) {
   return (
@@ -948,9 +965,20 @@ function ConfirmationCard({
         </div>
       </dl>
 
-      <div className="mt-6 flex justify-center gap-3">
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
         <Button variant="ghost" onClick={onBookAnother}>
           Book another
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() =>
+            downloadAppointmentReceipt({
+              ...confirmation,
+              patient_name: patientName || undefined,
+            })
+          }
+        >
+          Download receipt
         </Button>
         <Link href="/account">
           <Button>View my appointments</Button>

@@ -1,13 +1,31 @@
 import { jsPDF } from "jspdf";
 
 import { formatLongDate, hhmm } from "@/lib/labels";
-import type { MyAppointment } from "@/lib/patient-api";
 
 const BRAND: [number, number, number] = [209, 80, 111]; // brand-500 #d1506f
 const INK: [number, number, number] = [43, 58, 46]; // sage-900
 const MUTED: [number, number, number] = [120, 130, 120];
 
-export function downloadAppointmentReceipt(appt: MyAppointment): void {
+/**
+ * Minimal shape needed to render a receipt. Both `MyAppointment` (account view)
+ * and `BookingConfirmation` (fresh booking) satisfy this; `patient_name` is
+ * optional because the booking confirmation doesn't carry it.
+ */
+export interface AppointmentReceiptData {
+  appointment_number: string;
+  token_number: number;
+  appointment_status: string;
+  patient_name?: string;
+  doctor_name: string;
+  clinic_name: string;
+  clinic_address: string;
+  consultation_fee: string | null;
+  appointment_date: string;
+  start_time: string;
+  end_time: string;
+}
+
+export function downloadAppointmentReceipt(appt: AppointmentReceiptData): void {
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const marginX = 48;
@@ -44,7 +62,7 @@ export function downloadAppointmentReceipt(appt: MyAppointment): void {
   y += 30;
 
   const rows: [string, string][] = [
-    ["Patient", appt.patient_name],
+    ...(appt.patient_name ? ([["Patient", appt.patient_name]] as [string, string][]) : []),
     ["Status", appt.appointment_status],
     ["Token number", `#${appt.token_number}`],
     ["Date", formatLongDate(appt.appointment_date)],

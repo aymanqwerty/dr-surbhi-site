@@ -43,6 +43,40 @@ function ErrorText({ message }: { message: string | null }) {
   );
 }
 
+/**
+ * Mobile-number field: patients just type their 10-digit number. The country
+ * code is shown as a fixed "+91" prefix — never typed — and input is restricted
+ * to digits. The backend canonicalises anyway, but this keeps entry foolproof.
+ */
+function PhoneField({
+  id,
+  value,
+  onChange,
+}: {
+  id: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="flex items-stretch overflow-hidden rounded-xl border border-sage-200 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-100">
+      <span className="flex items-center border-r border-sage-200 bg-sage-50 px-3 text-sm font-medium text-sage-600">
+        +91
+      </span>
+      <input
+        id={id}
+        type="tel"
+        inputMode="numeric"
+        autoComplete="tel"
+        maxLength={10}
+        placeholder="10-digit mobile number"
+        value={value}
+        onChange={(e) => onChange(e.target.value.replace(/\D/g, "").slice(0, 10))}
+        className="min-w-0 flex-1 bg-white px-4 py-2 text-sm text-sage-900 placeholder:text-sage-400 focus:outline-none"
+      />
+    </div>
+  );
+}
+
 export function AuthFlow() {
   const router = useRouter();
   const params = useSearchParams();
@@ -121,23 +155,16 @@ export function AuthFlow() {
           onSubmit={(e) => {
             e.preventDefault();
             setLocalError(null);
-            if (phone.trim().length < 7) {
-              setLocalError("Enter a valid phone number.");
+            if (phone.length !== 10) {
+              setLocalError("Enter your 10-digit mobile number.");
               return;
             }
-            otpMutation.mutate(phone.trim());
+            otpMutation.mutate(phone);
           }}
         >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="phone">Mobile number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="+91..."
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+            <PhoneField id="phone" value={phone} onChange={setPhone} />
           </div>
           <ErrorText message={localError ?? errText(otpMutation.error, "Could not send the code.")} />
           <Button type="submit" disabled={otpMutation.isPending}>
@@ -286,8 +313,8 @@ export function AuthFlow() {
           onSubmit={(e) => {
             e.preventDefault();
             setLocalError(null);
-            if (pwPhone.trim().length < 7 || !password) {
-              setLocalError("Enter your mobile number and password.");
+            if (pwPhone.length !== 10 || !password) {
+              setLocalError("Enter your 10-digit mobile number and password.");
               return;
             }
             passwordMutation.mutate();
@@ -295,13 +322,7 @@ export function AuthFlow() {
         >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="pw_phone">Mobile number</Label>
-            <Input
-              id="pw_phone"
-              type="tel"
-              autoComplete="tel"
-              value={pwPhone}
-              onChange={(e) => setPwPhone(e.target.value)}
-            />
+            <PhoneField id="pw_phone" value={pwPhone} onChange={setPwPhone} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="pw">Password</Label>
