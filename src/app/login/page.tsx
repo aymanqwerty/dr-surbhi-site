@@ -6,11 +6,11 @@ import { Footer } from "@/components/layout/Footer";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-cream-50/20">
+    <div className="min-h-screen">
       <Header />
       <main className="mx-auto flex max-w-6xl flex-col items-center px-6 py-16">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-extrabold text-sage-900">Patient Sign In</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-sage-900 sm:text-3xl">Patient Sign In</h1>
           <p className="mt-1 text-sm text-sage-500">
             Sign in to book faster and manage your appointments with Dr. Surbhi.
           </p>

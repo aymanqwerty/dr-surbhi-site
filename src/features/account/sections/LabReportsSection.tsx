@@ -8,8 +8,8 @@ export function LabReportsSection() {
       title="Lab Reports"
       description="Your test results and reports will appear here."
     >
-      <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-brand-100 bg-cream-100/40 py-14 text-center">
-        <span className="flex size-12 items-center justify-center rounded-full bg-brand-50 text-brand-500">
+      <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-sage-300/70 bg-cream-100/50 py-14 text-center">
+        <span className="flex size-12 items-center justify-center rounded-full bg-brand-50 text-brand-500 ring-1 ring-brand-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

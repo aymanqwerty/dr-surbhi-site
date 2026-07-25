@@ -33,7 +33,7 @@ export function BookingEntry() {
 
   if (isError || !data) {
     return (
-      <div className="rounded-3xl border border-brand-100 bg-white p-8 text-center text-sm text-sage-500 shadow-card">
+      <div className="rounded-3xl border border-sage-200/70 bg-white p-8 text-center text-sm text-sage-500 shadow-card">
         This booking link is invalid or has expired. You can still book normally below.
         <div className="mt-6">
           <BookingWizard />

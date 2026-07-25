@@ -2,9 +2,9 @@ import { jsPDF } from "jspdf";
 
 import { formatLongDate, hhmm } from "@/lib/labels";
 
-const BRAND: [number, number, number] = [209, 80, 111]; // brand-500 #d1506f
-const INK: [number, number, number] = [43, 58, 46]; // sage-900
-const MUTED: [number, number, number] = [120, 130, 120];
+const BRAND: [number, number, number] = [158, 59, 95]; // brand-500 #9e3b5f
+const INK: [number, number, number] = [42, 32, 36]; // sage-900 #2a2024
+const MUTED: [number, number, number] = [118, 108, 98]; // sage-500 #766c62
 
 /**
  * Minimal shape needed to render a receipt. Both `MyAppointment` (account view)

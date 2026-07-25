@@ -47,7 +47,7 @@ export function MembersSection() {
           No family members yet. Add one to book on their behalf.
         </p>
       ) : (
-        <ul className="divide-y divide-brand-50">
+        <ul className="divide-y divide-sage-200/60">
           {members.map((member) => (
             <li key={member.id} className="flex items-center justify-between gap-3 py-3.5 first:pt-0 last:pb-0">
               <div className="flex items-center gap-3">

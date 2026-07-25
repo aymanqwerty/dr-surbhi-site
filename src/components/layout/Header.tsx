@@ -4,11 +4,11 @@ import { HeaderAuth } from "@/components/layout/HeaderAuth";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-brand-100/50 bg-white/80 backdrop-blur-md">
+    <header className="glass-header sticky top-0 z-40 w-full border-b border-sage-200/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Logo and Brand Name */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-300 to-brand-500 text-white shadow-soft transition-transform group-hover:scale-105">
+        <Link href="/" className="group flex items-center gap-3">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-soft ring-1 ring-white/40 transition-transform duration-300 group-hover:scale-105">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -28,7 +28,7 @@ export function Header() {
             <span className="block text-base font-bold tracking-tight text-sage-900">
               Dr. Surbhi Patne
             </span>
-            <span className="block text-[10px] font-semibold uppercase tracking-wider text-brand-600">
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
               Obstetrician &amp; Gynaecologist
             </span>
           </div>
@@ -36,26 +36,26 @@ export function Header() {
 
         {/* Navigation links */}
         <nav className="hidden items-center gap-7 text-sm font-medium text-sage-600 lg:flex">
-          <Link href="/" className="transition-colors hover:text-brand-500">
-            Home
-          </Link>
-          <Link href="/#services" className="transition-colors hover:text-brand-500">
-            Services
-          </Link>
-          <Link href="/about" className="transition-colors hover:text-brand-500">
-            About
-          </Link>
-          <Link href="/clinics" className="transition-colors hover:text-brand-500">
-            Clinics
-          </Link>
-          <Link href="/contact" className="transition-colors hover:text-brand-500">
-            Contact
-          </Link>
+          {[
+            { href: "/", label: "Home" },
+            { href: "/#services", label: "Services" },
+            { href: "/about", label: "About" },
+            { href: "/clinics", label: "Clinics" },
+            { href: "/contact", label: "Contact" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="relative transition-colors hover:text-brand-600 after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all after:duration-300 after:content-[''] hover:after:w-full"
+            >
+              {item.label}
+            </Link>
+          ))}
           <Link
             href="/assistant"
             className="flex items-center gap-1.5 font-semibold text-brand-600 transition-colors hover:text-brand-700"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(16,185,129,0.15)]" />
             Talk to AI
           </Link>
         </nav>

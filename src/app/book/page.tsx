@@ -6,11 +6,11 @@ import { Footer } from "@/components/layout/Footer";
 
 export default function BookPage() {
   return (
-    <div className="min-h-screen bg-cream-50/20">
+    <div className="min-h-screen">
       <Header />
       <main className="mx-auto w-full max-w-5xl px-6 py-12">
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-sage-900">Book an Appointment</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-sage-900 sm:text-3xl">Book an Appointment</h1>
           <p className="mt-1 text-sm text-sage-500">
             with Dr. Surbhi Patne · Obstetrician &amp; Gynaecologist
           </p>

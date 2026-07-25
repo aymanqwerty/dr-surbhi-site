@@ -71,7 +71,7 @@ function PhoneField({
         placeholder="10-digit mobile number"
         value={value}
         onChange={(e) => onChange(e.target.value.replace(/\D/g, "").slice(0, 10))}
-        className="min-w-0 flex-1 bg-white px-4 py-2 text-sm text-sage-900 placeholder:text-sage-400 focus:outline-none"
+        className="min-w-0 flex-1 bg-white px-4 py-2.5 text-sm text-sage-900 placeholder:text-sage-400 focus:outline-none focus-visible:shadow-none"
       />
     </div>
   );
@@ -138,7 +138,7 @@ export function AuthFlow() {
   });
 
   return (
-    <div className="w-full max-w-sm rounded-3xl border border-brand-100 bg-white p-8 shadow-card">
+    <div className="w-full max-w-sm rounded-3xl border border-sage-200/70 bg-white p-8 shadow-soft">
       <h2 className="text-xl font-bold text-sage-900">
         {step === "profile" ? "Complete your profile" : "Sign in to book"}
       </h2>

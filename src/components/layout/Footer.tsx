@@ -8,13 +8,13 @@ interface FooterProps {
 
 export function Footer({ clinicName = "Dr. Surbhi Patne — Women's Health Clinic", phone, email }: FooterProps) {
   return (
-    <footer className="border-t border-brand-100 bg-white py-12 text-sage-600">
+    <footer className="border-t border-sage-200/70 bg-cream-100/60 py-14 text-sage-600">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-8 md:grid-cols-4">
           {/* Clinic Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-300 to-brand-500 text-white">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-soft ring-1 ring-white/40">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -42,22 +42,22 @@ export function Footer({ clinicName = "Dr. Surbhi Patne — Women's Health Clini
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-sage-900">
+            <h4 className="text-xs font-bold uppercase tracking-[0.16em] text-sage-900">
               Quick Links
             </h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href="/" className="hover:text-brand-500 transition-colors">
+                <Link href="/" className="transition-colors hover:text-brand-600">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="hover:text-brand-500 transition-colors">
+                <Link href="/#services" className="transition-colors hover:text-brand-600">
                   Our Services
                 </Link>
               </li>
               <li>
-                <Link href="/#about" className="hover:text-brand-500 transition-colors">
+                <Link href="/#about" className="transition-colors hover:text-brand-600">
                   Meet the Doctor
                 </Link>
               </li>
@@ -66,10 +66,10 @@ export function Footer({ clinicName = "Dr. Surbhi Patne — Women's Health Clini
 
           {/* Clinic Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-sage-900">
+            <h4 className="text-xs font-bold uppercase tracking-[0.16em] text-sage-900">
               Contact
             </h4>
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed">
+            <ul className="mt-4 space-y-2.5 text-sm leading-relaxed">
               {phone && (
                 <li>
                   <span className="font-semibold text-sage-800">Phone:</span> {phone}
@@ -88,9 +88,10 @@ export function Footer({ clinicName = "Dr. Surbhi Patne — Women's Health Clini
         </div>
 
         {/* Emergency Notice */}
-        <div className="mt-10 border-t border-brand-100/50 pt-8">
-          <div className="rounded-2xl bg-red-50/55 border border-red-100 p-4 text-xs leading-relaxed text-red-800">
-            <span className="font-bold uppercase tracking-wider text-red-900 mr-2">Emergency Disclaimer:</span>
+        <div className="mt-12">
+          <div className="hairline-gold" />
+          <div className="mt-8 rounded-2xl border border-red-100 bg-red-50/60 p-4 text-xs leading-relaxed text-red-800">
+            <span className="mr-2 font-bold uppercase tracking-wider text-red-900">Emergency Disclaimer:</span>
             If you are experiencing severe abdominal pain, heavy bleeding, or any pregnancy-related medical emergency, please do not wait for an appointment — go to the nearest Emergency Room or hospital immediately.
           </div>
           <p className="mt-6 text-center text-xs text-sage-400">

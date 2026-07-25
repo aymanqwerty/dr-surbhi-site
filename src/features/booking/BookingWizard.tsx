@@ -129,7 +129,7 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
         name: payment.doctor_name,
         description: `Consultation at ${payment.clinic_name}`,
         prefill: { name: prefill.name, email: prefill.email, contact: prefill.contact },
-        theme: { color: "#d1506f" },
+        theme: { color: "#9e3b5f" },
         handler: (response) => {
           confirmMutation
             .mutateAsync({
@@ -211,7 +211,7 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
 
   if (clinics.length === 0) {
     return (
-      <div className="rounded-3xl border border-brand-100 bg-white p-10 text-center text-sm text-sage-500 shadow-card">
+      <div className="rounded-3xl border border-sage-200/70 bg-white p-10 text-center text-sm text-sage-500 shadow-card">
         Online booking isn&apos;t available yet. Please check back soon or contact the clinic.
       </div>
     );
@@ -221,7 +221,7 @@ export function BookingWizard({ prefill }: { prefill?: SessionPrefill } = {}) {
     <div className="grid gap-8 lg:grid-cols-[1fr_18rem]">
       <div className="flex min-w-0 flex-col gap-6">
         <Stepper step={step} />
-        <div className="rounded-3xl border border-brand-100 bg-white p-6 shadow-card">
+        <div className="rounded-3xl border border-sage-200/70 bg-white p-6 shadow-card sm:p-7">
           {step === 0 && (
             <ClinicStep
               clinics={clinics}
@@ -339,7 +339,7 @@ function Stepper({ step }: { step: number }) {
               {i + 1}
             </span>
             <span className={active ? "font-semibold text-sage-800" : "text-sage-400"}>{label}</span>
-            {i < STEPS.length - 1 && <span className="mx-1 h-px w-6 bg-brand-100" />}
+            {i < STEPS.length - 1 && <span className="mx-1 h-px w-6 bg-sage-200" />}
           </li>
         );
       })}
@@ -379,7 +379,7 @@ function ClinicStep({
               type="button"
               onClick={() => onSelect(clinic.id)}
               className={`rounded-2xl border p-4 text-left transition-colors ${
-                active ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-brand-100 hover:bg-sage-50"
+                active ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-sage-200 hover:border-sage-300 hover:bg-sage-50"
               }`}
             >
               <p className="font-semibold text-sage-800">{clinic.clinic_name}</p>
@@ -482,13 +482,13 @@ function DateTimeStep({
             {date ? "Available times" : "Times"}
           </p>
           {!date ? (
-            <div className="flex min-h-40 items-center justify-center rounded-2xl border border-brand-50 bg-cream-100/50 p-6 text-center text-sm text-sage-500">
+            <div className="flex min-h-40 items-center justify-center rounded-2xl border border-sage-200/60 bg-cream-100/60 p-6 text-center text-sm text-sage-500">
               Select a date to see available times.
             </div>
           ) : slotsFetching ? (
             <p className="text-sm text-sage-500">Loading times...</p>
           ) : slots.length === 0 ? (
-            <div className="rounded-2xl border border-brand-50 bg-cream-100/50 p-6 text-center text-sm text-sage-500">
+            <div className="rounded-2xl border border-sage-200/60 bg-cream-100/60 p-6 text-center text-sm text-sage-500">
               No available times on this day. Try another date.
             </div>
           ) : (
@@ -615,7 +615,7 @@ function GuestStep({
     >
       <StepHeading title="Your details" subtitle="We'll use these to confirm your appointment." />
 
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-brand-50 bg-cream-100/50 px-3 py-2 text-sm">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-sage-200/60 bg-cream-100/60 px-3 py-2 text-sm">
         <span className="text-sage-500">Have an account? Sign in to use your saved details.</span>
         <Link href="/login?redirect=book" className="font-medium text-brand-600 hover:underline">
           Sign in
@@ -646,7 +646,7 @@ function GuestStep({
         <Field label="Reason for visit (optional)" className="sm:col-span-2">
           <textarea
             rows={3}
-            className="rounded-xl border border-sage-200 bg-white px-4 py-2 text-sm text-sage-900 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100"
+            className="rounded-xl border border-sage-200 bg-white px-4 py-2.5 text-sm text-sage-900 transition-colors hover:border-sage-300 focus:border-brand-400 focus:outline-none"
             value={form.reason}
             onChange={(e) => setForm((f) => ({ ...f, reason: e.target.value }))}
           />
@@ -755,7 +755,7 @@ function WhoStep({
               type="button"
               onClick={() => setSelectedId(p.id)}
               className={`rounded-2xl border p-3 text-left transition-colors ${
-                active ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-brand-100 hover:bg-sage-50"
+                active ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-sage-200 hover:border-sage-300 hover:bg-sage-50"
               }`}
             >
               <p className="text-sm font-semibold text-sage-800">{p.full_name}</p>
@@ -768,7 +768,7 @@ function WhoStep({
           type="button"
           onClick={() => setSelectedId(MANUAL_ID)}
           className={`rounded-2xl border p-3 text-left transition-colors ${
-            isManual ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-brand-100 hover:bg-sage-50"
+            isManual ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-sage-200 hover:border-sage-300 hover:bg-sage-50"
           }`}
         >
           <p className="text-sm font-semibold text-sage-800">Someone else</p>
@@ -785,7 +785,7 @@ function WhoStep({
       </div>
 
       {isManual && (
-        <div className="mt-4 grid gap-4 rounded-2xl border border-brand-50 p-4 sm:grid-cols-2">
+        <div className="mt-4 grid gap-4 rounded-2xl border border-sage-200/60 bg-cream-100/40 p-4 sm:grid-cols-2">
           <Field label="Full name" className="sm:col-span-2">
             <Input value={manual.name} onChange={(e) => setManual((m) => ({ ...m, name: e.target.value }))} />
           </Field>
@@ -830,7 +830,7 @@ function WhoStep({
         <Field label="Reason for visit (optional)">
           <textarea
             rows={3}
-            className="w-full rounded-xl border border-sage-200 bg-white px-4 py-2 text-sm text-sage-900 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100"
+            className="w-full rounded-xl border border-sage-200 bg-white px-4 py-2.5 text-sm text-sage-900 transition-colors hover:border-sage-300 focus:border-brand-400 focus:outline-none"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
           />
@@ -895,10 +895,10 @@ function BookingSummary({
   fee: string | null;
 }) {
   return (
-    <aside className="h-fit rounded-3xl border border-brand-100 bg-white p-5 shadow-card lg:sticky lg:top-24">
+    <aside className="glass h-fit rounded-3xl p-5 lg:sticky lg:top-24">
       <p className="font-bold text-sage-900">{doctorName}</p>
       <p className="text-sm text-brand-600">{specialization}</p>
-      <div className="my-4 h-px bg-brand-50" />
+      <div className="my-4 h-px bg-sage-200/70" />
       <dl className="flex flex-col gap-2 text-sm">
         <SummaryRow label="Clinic" value={clinicName} />
         <SummaryRow label="Date" value={date} />
@@ -930,8 +930,8 @@ function ConfirmationCard({
   onBookAnother: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-lg rounded-3xl border border-brand-100 bg-white p-8 text-center shadow-card">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sage-100 text-sage-700">
+    <div className="mx-auto max-w-lg rounded-3xl border border-sage-200/70 bg-white p-8 text-center shadow-soft">
+      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-2xl text-emerald-600 ring-1 ring-emerald-100">
         ✓
       </div>
       <h2 className="text-xl font-bold text-sage-900">Appointment confirmed</h2>

@@ -28,9 +28,9 @@ export function AccountSidebar({ name, phone }: { name: string; phone: string })
   const pathname = usePathname();
 
   return (
-    <aside className="rounded-3xl border border-brand-100 bg-white p-4 shadow-card lg:sticky lg:top-24">
+    <aside className="glass rounded-3xl p-4 lg:sticky lg:top-24">
       <div className="mb-4 flex items-center gap-3 px-2 py-2">
-        <span className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-brand-300 to-brand-500 text-base font-bold text-white">
+        <span className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-base font-bold text-white shadow-soft ring-1 ring-white/40">
           {name ? name.charAt(0).toUpperCase() : "•"}
         </span>
         <div className="min-w-0">

@@ -22,7 +22,7 @@ export function ClinicsList() {
 
   if (clinics.length === 0) {
     return (
-      <div className="rounded-3xl border border-brand-100 bg-white p-10 text-center shadow-card">
+      <div className="rounded-3xl border border-sage-200/70 bg-white p-10 text-center shadow-card">
         <p className="text-sm text-sage-500">
           Clinic details will appear here soon. You can still book online to see available dates and
           times.
@@ -37,7 +37,7 @@ export function ClinicsList() {
   return (
     <div className="grid gap-6 sm:grid-cols-2">
       {clinics.map((clinic) => (
-        <div key={clinic.id} className="flex flex-col justify-between rounded-3xl border border-brand-100 bg-white p-8 shadow-card">
+        <div key={clinic.id} className="flex flex-col justify-between rounded-3xl border border-sage-200/70 bg-white p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-lift">
           <div>
             <h2 className="text-lg font-bold text-sage-900">{clinic.clinic_name}</h2>
             <p className="mt-2 text-sm leading-relaxed text-sage-600">{fullAddress(clinic)}</p>

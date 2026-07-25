@@ -11,7 +11,7 @@ const VoicePanel = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex w-full max-w-xl items-center justify-center gap-2 rounded-3xl border border-brand-100 bg-white p-10 text-sm text-sage-500 shadow-card">
+      <div className="flex w-full max-w-xl items-center justify-center gap-2 rounded-3xl border border-sage-200/70 bg-white p-10 text-sm text-sage-500 shadow-card">
         <Spinner /> Loading the receptionist…
       </div>
     ),

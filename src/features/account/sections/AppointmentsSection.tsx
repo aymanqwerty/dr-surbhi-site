@@ -7,9 +7,9 @@ import { formatLongDate, hhmm } from "@/lib/labels";
 import { Button } from "@/components/ui/Button";
 
 const STATUS_STYLES: Record<string, string> = {
-  CONFIRMED: "bg-sage-50 text-sage-700 border-sage-200",
-  PENDING: "bg-brand-50 text-brand-700 border-brand-200",
-  COMPLETED: "bg-sage-100 text-sage-800 border-sage-300",
+  CONFIRMED: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  PENDING: "bg-amber-50 text-amber-700 border-amber-200",
+  COMPLETED: "bg-sage-100 text-sage-700 border-sage-300",
   CANCELLED: "bg-red-50 text-red-700 border-red-200",
   NO_SHOW: "bg-cream-100 text-sage-500 border-sage-200",
 };
@@ -29,7 +29,7 @@ export function AppointmentsSection() {
       ) : (
         <ul className="flex flex-col gap-3">
           {appointments.map((a) => (
-            <li key={a.id} className="rounded-2xl border border-brand-50 p-4">
+            <li key={a.id} className="rounded-2xl border border-sage-200/60 bg-cream-50/40 p-4 transition-colors hover:border-sage-300/70">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <div className="flex items-center gap-2">

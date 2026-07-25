@@ -65,7 +65,7 @@ export function BookingCalendar({
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
 
   return (
-    <div className="rounded-2xl border border-brand-100 p-4">
+    <div className="rounded-2xl border border-sage-200/70 bg-white p-4">
       <div className="mb-3 flex items-center justify-between">
         <button
           type="button"

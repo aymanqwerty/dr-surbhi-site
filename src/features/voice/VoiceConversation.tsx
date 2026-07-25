@@ -96,7 +96,7 @@ export function VoiceConversation() {
         : "Tap to start";
 
   return (
-    <div className="w-full max-w-xl rounded-3xl border border-brand-100 bg-white p-6 shadow-card sm:p-8">
+    <div className="w-full max-w-xl rounded-3xl border border-sage-200/70 bg-white p-6 shadow-soft sm:p-8">
       {/* Avatar + status */}
       <div className="flex flex-col items-center text-center">
         <div className="relative">
@@ -144,7 +144,7 @@ export function VoiceConversation() {
       {/* Transcript */}
       <div
         ref={scrollRef}
-        className="mt-6 flex h-72 flex-col gap-3 overflow-y-auto rounded-2xl border border-brand-50 bg-cream-50/40 p-4"
+        className="mt-6 flex h-72 flex-col gap-3 overflow-y-auto rounded-2xl border border-sage-200/60 bg-cream-100/50 p-4"
       >
         {messages.length === 0 ? (
           <p className="m-auto max-w-xs text-center text-sm text-sage-400">
@@ -160,8 +160,8 @@ export function VoiceConversation() {
               <div
                 className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-sm ${
                   m.role === "user"
-                    ? "rounded-br-sm bg-brand-500 text-white"
-                    : "rounded-bl-sm border border-brand-50 bg-white text-sage-700"
+                    ? "rounded-br-sm bg-brand-500 text-white shadow-soft"
+                    : "rounded-bl-sm border border-sage-200/60 bg-white text-sage-700"
                 }`}
               >
                 {m.text}

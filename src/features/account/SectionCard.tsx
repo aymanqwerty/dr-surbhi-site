@@ -10,7 +10,7 @@ export function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-3xl border border-brand-100 bg-white p-6 shadow-card sm:p-8">
+    <section className="rounded-3xl border border-sage-200/70 bg-white p-6 shadow-card sm:p-8">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-lg font-bold text-sage-900">{title}</h1>
@@ -26,8 +26,8 @@ export function SectionCard({
 export function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-[11px] uppercase tracking-wider text-sage-400">{label}</dt>
-      <dd className="text-sm font-semibold text-sage-800">{value}</dd>
+      <dt className="text-[11px] uppercase tracking-[0.14em] text-sage-400">{label}</dt>
+      <dd className="mt-0.5 text-sm font-semibold text-sage-800">{value}</dd>
     </div>
   );
 }
