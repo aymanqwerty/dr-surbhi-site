@@ -1,13 +1,16 @@
 import Link from "next/link";
 
 import { HeaderAuth } from "@/components/layout/HeaderAuth";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 export function Header() {
   return (
     <header className="glass-header sticky top-0 z-40 w-full border-b border-sage-200/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        {/* Logo and Brand Name */}
-        <Link href="/" className="group flex items-center gap-3">
+        {/* Left: mobile menu button + logo */}
+        <div className="flex items-center gap-2 lg:gap-3">
+          <MobileNav />
+          <Link href="/" className="group flex items-center gap-3">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-soft ring-1 ring-white/40 transition-transform duration-300 group-hover:scale-105">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +35,8 @@ export function Header() {
               Obstetrician &amp; Gynaecologist
             </span>
           </div>
-        </Link>
+          </Link>
+        </div>
 
         {/* Navigation links */}
         <nav className="hidden items-center gap-7 text-sm font-medium text-sage-600 lg:flex">

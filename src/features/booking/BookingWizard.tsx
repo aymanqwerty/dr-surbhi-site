@@ -30,6 +30,7 @@ import { loadRazorpay, openRazorpayCheckout } from "@/features/booking/razorpay"
 import { MemberFormModal } from "@/features/account/MemberFormModal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { PhoneField } from "@/components/ui/PhoneField";
 import { Select } from "@/components/ui/Select";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -605,8 +606,12 @@ function GuestStep({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (!form.name.trim() || !form.phone.trim()) {
-          setError("Name and mobile number are required.");
+        if (!form.name.trim()) {
+          setError("Please enter your name.");
+          return;
+        }
+        if (form.phone.length !== 10) {
+          setError("Enter a valid 10-digit mobile number.");
           return;
         }
         setError(null);
@@ -627,7 +632,7 @@ function GuestStep({
           <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
         </Field>
         <Field label="Mobile number">
-          <Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
+          <PhoneField value={form.phone} onChange={(v) => setForm((f) => ({ ...f, phone: v }))} />
         </Field>
         <Field label="Email (optional)">
           <Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
@@ -718,8 +723,12 @@ function WhoStep({
 
   const confirm = () => {
     if (isManual) {
-      if (!manual.name.trim() || !manual.phone.trim()) {
-        setError("Name and mobile number are required.");
+      if (!manual.name.trim()) {
+        setError("Please enter a name.");
+        return;
+      }
+      if (manual.phone.length !== 10) {
+        setError("Enter a valid 10-digit mobile number.");
         return;
       }
       setError(null);
@@ -790,7 +799,7 @@ function WhoStep({
             <Input value={manual.name} onChange={(e) => setManual((m) => ({ ...m, name: e.target.value }))} />
           </Field>
           <Field label="Mobile number">
-            <Input value={manual.phone} onChange={(e) => setManual((m) => ({ ...m, phone: e.target.value }))} />
+            <PhoneField value={manual.phone} onChange={(v) => setManual((m) => ({ ...m, phone: v }))} />
           </Field>
           <Field label="Email (optional)">
             <Input type="email" value={manual.email} onChange={(e) => setManual((m) => ({ ...m, email: e.target.value }))} />

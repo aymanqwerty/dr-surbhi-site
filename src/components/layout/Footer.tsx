@@ -97,6 +97,9 @@ export function Footer({ clinicName = "Dr. Surbhi Patne — Women's Health Clini
           <p className="mt-6 text-center text-xs text-sage-400">
             © {new Date().getFullYear()} {clinicName}. All rights reserved.
           </p>
+          <p className="mt-2 text-center text-xs text-sage-400">
+            Developed and managed by Ayman Akram
+          </p>
         </div>
       </div>
     </footer>

@@ -16,6 +16,7 @@ import {
 } from "@/lib/patient-api";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { PhoneField } from "@/components/ui/PhoneField";
 import { Select } from "@/components/ui/Select";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -40,40 +41,6 @@ function ErrorText({ message }: { message: string | null }) {
     <p className="text-sm text-red-600" role="alert">
       {message}
     </p>
-  );
-}
-
-/**
- * Mobile-number field: patients just type their 10-digit number. The country
- * code is shown as a fixed "+91" prefix — never typed — and input is restricted
- * to digits. The backend canonicalises anyway, but this keeps entry foolproof.
- */
-function PhoneField({
-  id,
-  value,
-  onChange,
-}: {
-  id: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="flex items-stretch overflow-hidden rounded-xl border border-sage-200 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-100">
-      <span className="flex items-center border-r border-sage-200 bg-sage-50 px-3 text-sm font-medium text-sage-600">
-        +91
-      </span>
-      <input
-        id={id}
-        type="tel"
-        inputMode="numeric"
-        autoComplete="tel"
-        maxLength={10}
-        placeholder="10-digit mobile number"
-        value={value}
-        onChange={(e) => onChange(e.target.value.replace(/\D/g, "").slice(0, 10))}
-        className="min-w-0 flex-1 bg-white px-4 py-2.5 text-sm text-sage-900 placeholder:text-sage-400 focus:outline-none focus-visible:shadow-none"
-      />
-    </div>
   );
 }
 
