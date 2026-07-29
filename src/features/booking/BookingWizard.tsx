@@ -354,14 +354,26 @@ function StepHeading({ title, subtitle }: { title: string; subtitle: string }) {
   );
 }
 
-/** Initials for the clinic badge — the fastest visual differentiator. */
-function clinicInitials(name: string): string {
-  const words = name.trim().split(/\s+/).filter(Boolean);
-  const first = words[0];
-  const last = words[words.length - 1];
-  if (!first || !last) return "?";
-  if (words.length === 1) return first.slice(0, 2).toUpperCase();
-  return `${first[0] ?? ""}${last[0] ?? ""}`.toUpperCase();
+function ClinicIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.7}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      {/* Building outline with a medical cross — reads as "clinic" at 24px. */}
+      <path d="M3 21h18" />
+      <path d="M5 21V7l7-4 7 4v14" />
+      <path d="M12 9v5" />
+      <path d="M9.5 11.5h5" />
+    </svg>
+  );
 }
 
 /** Street address without the city/state, which are shown separately. */
@@ -390,7 +402,7 @@ function ClinicStep({
       {/* A real radio group: keyboard arrows move between clinics, and screen
           readers announce the selection. */}
       <div role="radiogroup" aria-label="Clinic" className="flex flex-col gap-3.5">
-        {clinics.map((clinic) => {
+        {clinics.map((clinic, index) => {
           const active = clinic.id === activeClinicId;
           return (
             <div
@@ -410,24 +422,26 @@ function ClinicStep({
                   onChange={() => onSelect(clinic.id)}
                 />
 
-                {/* Initials badge — distinguishes clinics at a glance. */}
                 <span
-                  aria-hidden
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-bold tracking-wide transition-colors ${
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors ${
                     active
                       ? "bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-soft"
-                      : "bg-sage-100 text-sage-500"
+                      : "bg-cream-100 text-sage-400"
                   }`}
                 >
-                  {clinicInitials(clinic.clinic_name)}
+                  <ClinicIcon className="h-6 w-6" />
                 </span>
 
                 <span className="min-w-0 flex-1">
-                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  {/* An ordinal gives each card a stable, glanceable handle;
+                      the city underneath is what actually tells them apart. */}
+                  <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-600">
+                    Clinic {index + 1}
+                  </span>
+                  <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="text-base font-bold text-sage-900">
                       {clinic.clinic_name}
                     </span>
-                    {/* City is the key differentiator across her clinics. */}
                     <span className="rounded-full bg-cream-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sage-500">
                       {clinic.city}
                     </span>

@@ -45,6 +45,7 @@ export default async function StoryDetailPage({
   const date = formatPostDate(post, "long");
 
   const images = post.media.filter((item) => item.type === "image");
+  const uploadedVideos = post.media.filter((item) => item.type === "video");
   const videos = post.media.filter(
     (item) => item.type === "youtube" && item.youtube_id,
   );
@@ -105,6 +106,32 @@ export default async function StoryDetailPage({
                   width={900}
                   height={600}
                   className="w-full rounded-2xl shadow-soft"
+                />
+                {item.description && (
+                  <figcaption>
+                    <RichText
+                      html={item.description}
+                      className="text-sm leading-relaxed text-sage-600"
+                    />
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </section>
+        )}
+
+        {uploadedVideos.length > 0 && (
+          <section className="mt-10 flex flex-col gap-8">
+            {uploadedVideos.map((item, index) => (
+              <figure key={`${item.url}-${index}`} className="flex flex-col gap-3">
+                <video
+                  src={mediaUrl(item.url)}
+                  controls
+                  playsInline
+                  // Only the first frame until the patient hits play — these
+                  // are self-hosted, so every byte is billed egress.
+                  preload="metadata"
+                  className="w-full rounded-2xl bg-black shadow-soft"
                 />
                 {item.description && (
                   <figcaption>

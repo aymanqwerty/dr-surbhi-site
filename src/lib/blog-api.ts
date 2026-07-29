@@ -8,7 +8,8 @@
 
 import { API_BASE_URL, DOCTOR_SLUG } from "@/lib/config";
 
-export type MediaType = "image" | "youtube" | "instagram";
+/** "video" is a file we host; "youtube"/"instagram" are third-party embeds. */
+export type MediaType = "image" | "video" | "youtube" | "instagram";
 
 export interface MediaItem {
   type: MediaType;

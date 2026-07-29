@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { fetchBlogCategories } from "@/lib/blog-api";
 import {
   addMember,
   deleteMember,
@@ -21,6 +22,20 @@ import {
 export const ME_KEY = ["me"] as const;
 export const MEMBERS_KEY = ["members"] as const;
 export const APPOINTMENTS_KEY = ["appointments"] as const;
+
+/**
+ * Blog categories, for the nav dropdown.
+ *
+ * Only categories with published posts come back, so an entry never leads to
+ * an empty page. Cached for the session — these change rarely.
+ */
+export function useBlogCategories() {
+  return useQuery({
+    queryKey: ["blog-categories"],
+    queryFn: fetchBlogCategories,
+    staleTime: 5 * 60_000,
+  });
+}
 
 /** Current patient session (null when signed out). */
 export function usePatientSession() {
