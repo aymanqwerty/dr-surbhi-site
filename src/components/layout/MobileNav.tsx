@@ -4,16 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { usePatientSession } from "@/lib/hooks";
-
-const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/#services", label: "Services" },
-  { href: "/about", label: "About" },
-  { href: "/clinics", label: "Clinics" },
-  { href: "/contact", label: "Contact" },
-  { href: "/assistant", label: "Talk to AI" },
-];
+import { usePatientSession, usePublicSettings } from "@/lib/hooks";
 
 /**
  * Mobile menu (below `lg`): a hamburger on the left that opens a drawer sliding
@@ -25,6 +16,20 @@ export function MobileNav() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { data: session } = usePatientSession();
+  const { data: settings } = usePublicSettings();
+
+  // The blog section's name is doctor-configurable, and the whole entry is
+  // dropped when she switches the section off.
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    ...(settings && !settings.gallery_enabled
+      ? []
+      : [{ href: "/stories", label: settings?.section_label ?? "Success Stories" }]),
+    { href: "/clinics", label: "Clinics" },
+    { href: "/contact", label: "Contact" },
+    { href: "/assistant", label: "Talk to AI" },
+  ];
 
   useEffect(() => setMounted(true), []);
 
@@ -80,7 +85,7 @@ export function MobileNav() {
           </button>
         </div>
         <nav className="flex flex-col gap-0.5 px-3 py-3">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}

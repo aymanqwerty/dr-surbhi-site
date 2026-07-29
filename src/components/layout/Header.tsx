@@ -2,6 +2,10 @@ import Link from "next/link";
 
 import { HeaderAuth } from "@/components/layout/HeaderAuth";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { SectionNavLink } from "@/components/layout/SectionNavLink";
+
+const NAV_LINK_CLASS =
+  "relative transition-colors hover:text-brand-600 after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all after:duration-300 after:content-[''] hover:after:w-full";
 
 export function Header() {
   return (
@@ -42,15 +46,27 @@ export function Header() {
         <nav className="hidden items-center gap-7 text-sm font-medium text-sage-600 lg:flex">
           {[
             { href: "/", label: "Home" },
-            { href: "/#services", label: "Services" },
             { href: "/about", label: "About" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={NAV_LINK_CLASS}
+            >
+              {item.label}
+            </Link>
+          ))}
+          {/* Label comes from the doctor's settings, so it changes when she
+              renames the section. */}
+          <SectionNavLink className={NAV_LINK_CLASS} />
+          {[
             { href: "/clinics", label: "Clinics" },
             { href: "/contact", label: "Contact" },
           ].map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="relative transition-colors hover:text-brand-600 after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all after:duration-300 after:content-[''] hover:after:w-full"
+              className={NAV_LINK_CLASS}
             >
               {item.label}
             </Link>

@@ -48,9 +48,6 @@ function todayIso(): string {
   return isoOf(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
-function clinicLine(clinic: PublicClinic): string {
-  return [clinic.address_line_1, clinic.city, clinic.state].filter(Boolean).join(", ");
-}
 
 export interface SessionPrefill {
   clinicId: string;
@@ -357,6 +354,21 @@ function StepHeading({ title, subtitle }: { title: string; subtitle: string }) {
   );
 }
 
+/** Initials for the clinic badge — the fastest visual differentiator. */
+function clinicInitials(name: string): string {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  const first = words[0];
+  const last = words[words.length - 1];
+  if (!first || !last) return "?";
+  if (words.length === 1) return first.slice(0, 2).toUpperCase();
+  return `${first[0] ?? ""}${last[0] ?? ""}`.toUpperCase();
+}
+
+/** Street address without the city/state, which are shown separately. */
+function streetLine(clinic: PublicClinic): string {
+  return [clinic.address_line_1, clinic.address_line_2].filter(Boolean).join(", ");
+}
+
 function ClinicStep({
   clinics,
   activeClinicId,
@@ -370,30 +382,152 @@ function ClinicStep({
 }) {
   return (
     <div>
-      <StepHeading title="Choose a clinic" subtitle="Where would you like to be seen?" />
-      <div className="flex flex-col gap-3">
+      <StepHeading
+        title="Choose a clinic"
+        subtitle="Where would you like to be seen?"
+      />
+
+      {/* A real radio group: keyboard arrows move between clinics, and screen
+          readers announce the selection. */}
+      <div role="radiogroup" aria-label="Clinic" className="flex flex-col gap-3.5">
         {clinics.map((clinic) => {
           const active = clinic.id === activeClinicId;
           return (
-            <button
+            <div
               key={clinic.id}
-              type="button"
-              onClick={() => onSelect(clinic.id)}
-              className={`rounded-2xl border p-4 text-left transition-colors ${
-                active ? "border-brand-400 bg-brand-50/60 ring-1 ring-brand-200" : "border-sage-200 hover:border-sage-300 hover:bg-sage-50"
+              className={`overflow-hidden rounded-2xl border transition-all duration-200 ${
+                active
+                  ? "border-brand-400 bg-brand-50/50 shadow-soft ring-1 ring-brand-300"
+                  : "border-sage-200 bg-white hover:border-brand-200 hover:shadow-soft"
               }`}
             >
-              <p className="font-semibold text-sage-800">{clinic.clinic_name}</p>
-              <p className="text-sm text-sage-500">{clinicLine(clinic)}</p>
-              {clinic.consultation_fee && (
-                <p className="mt-0.5 text-sm text-sage-500">
-                  Consultation fee: ₹{clinic.consultation_fee}
-                </p>
+              <label className="flex cursor-pointer items-start gap-4 p-5">
+                <input
+                  type="radio"
+                  name="clinic"
+                  className="sr-only"
+                  checked={active}
+                  onChange={() => onSelect(clinic.id)}
+                />
+
+                {/* Initials badge — distinguishes clinics at a glance. */}
+                <span
+                  aria-hidden
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-bold tracking-wide transition-colors ${
+                    active
+                      ? "bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-soft"
+                      : "bg-sage-100 text-sage-500"
+                  }`}
+                >
+                  {clinicInitials(clinic.clinic_name)}
+                </span>
+
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-base font-bold text-sage-900">
+                      {clinic.clinic_name}
+                    </span>
+                    {/* City is the key differentiator across her clinics. */}
+                    <span className="rounded-full bg-cream-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sage-500">
+                      {clinic.city}
+                    </span>
+                  </span>
+
+                  <span className="mt-1.5 flex items-start gap-1.5 text-sm text-sage-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.8}
+                      className="mt-0.5 h-4 w-4 shrink-0 text-sage-400"
+                      aria-hidden
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                      />
+                    </svg>
+                    <span>
+                      {streetLine(clinic)}
+                      <span className="block text-sage-400">
+                        {[clinic.city, clinic.state].filter(Boolean).join(", ")}
+                      </span>
+                    </span>
+                  </span>
+
+                  {clinic.phone_number && (
+                    <span className="mt-1 block text-sm text-sage-500">
+                      {clinic.phone_number}
+                    </span>
+                  )}
+                </span>
+
+                <span className="flex shrink-0 flex-col items-end gap-2">
+                  {clinic.consultation_fee && (
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs font-bold ${
+                        active
+                          ? "bg-brand-500 text-white"
+                          : "bg-sage-100 text-sage-600"
+                      }`}
+                    >
+                      ₹{clinic.consultation_fee}
+                    </span>
+                  )}
+                  <span
+                    aria-hidden
+                    className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors ${
+                      active
+                        ? "border-brand-500 bg-brand-500"
+                        : "border-sage-300 bg-white"
+                    }`}
+                  >
+                    {active && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={3.5}
+                        className="h-3 w-3 text-white"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4.5 12.75l6 6 9-13.5"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                </span>
+              </label>
+
+              {/* Outside the <label> on purpose — tapping directions must not
+                  also select the clinic. */}
+              {clinic.google_maps_url && (
+                <div className="border-t border-sage-200/70 px-5 py-2.5">
+                  <a
+                    href={clinic.google_maps_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-brand-600 transition-colors hover:text-brand-700"
+                  >
+                    Get directions ↗
+                  </a>
+                </div>
               )}
-            </button>
+            </div>
           );
         })}
       </div>
+
       <div className="mt-6 flex justify-end">
         <Button onClick={onContinue} disabled={!activeClinicId}>
           Continue

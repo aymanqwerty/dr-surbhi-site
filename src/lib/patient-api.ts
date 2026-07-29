@@ -136,6 +136,12 @@ export interface PublicSettings {
   show_consultation_fee: boolean;
   show_contact_information: boolean;
   payment_required: boolean;
+  /**
+   * What the doctor calls the blog section publicly ("Success Stories",
+   * "Achievements", …). The API always resolves a default, so this is never
+   * empty. The URL stays /stories regardless.
+   */
+  section_label: string;
 }
 
 export interface PublicSlot {
